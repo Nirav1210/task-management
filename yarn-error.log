@@ -1,0 +1,36 @@
+Arguments: 
+  /Users/nbhut/.nvm/versions/node/v11.6.0/bin/node /Users/nbhut/.nvm/versions/node/v11.6.0/bin/yarn add @nestjs/cli
+
+PATH: 
+  /usr/local/opt/python@3.7/bin:/usr/local/opt/openssl/bin:/usr/local/sbin:/Users/nbhut/bin:/Users/nbhut/.pyenv/plugins/pyenv-virtualenv/shims:/Users/nbhut/.pyenv/shims:/Users/nbhut/.nvm/versions/node/v11.6.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/usr/local/opt/python@3.7/bin:/usr/local/opt/openssl/bin:/usr/local/sbin:/Users/nbhut/bin:/Users/nbhut/.pyenv/plugins/pyenv-virtualenv/shims:/Users/nbhut/.pyenv/shims:/Users/nbhut/.nvm/versions/node/v11.6.0/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  11.6.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://alayacare-406883902139.d.codeartifact.us-east-1.amazonaws.com/npm/alaya-npm/@nestjs%2fcli: Unauthenticated: request used expired credentials. Please renew your credentials.
+      at Request.params.callback [as _callback] (/Users/nbhut/.nvm/versions/node/v11.6.0/lib/node_modules/yarn/lib/cli.js:66988:18)
+      at Request.self.callback (/Users/nbhut/.nvm/versions/node/v11.6.0/lib/node_modules/yarn/lib/cli.js:140662:22)
+      at Request.emit (events.js:188:13)
+      at Request.<anonymous> (/Users/nbhut/.nvm/versions/node/v11.6.0/lib/node_modules/yarn/lib/cli.js:141634:10)
+      at Request.emit (events.js:188:13)
+      at Gunzip.<anonymous> (/Users/nbhut/.nvm/versions/node/v11.6.0/lib/node_modules/yarn/lib/cli.js:141556:12)
+      at Object.onceWrapper (events.js:276:13)
+      at Gunzip.emit (events.js:193:15)
+      at endReadableNT (_stream_readable.js:1129:12)
+      at process.internalTickCallback (internal/process/next_tick.js:72:19)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
