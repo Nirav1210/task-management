@@ -5,10 +5,13 @@ import { TaskDTO } from './dto/task.dto';
 import { AppBar, Button, Grid, Toolbar, Typography } from '@material-ui/core';
 import Task from './components/Task';
 import CreateTaskModal from './components/CreateTaskModal';
+import EditTaskModal from './components/EditTaskModal';
 
 function App() {
   const [tasks, setTasks] = useState<TaskDTO[]>([]);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState<undefined | TaskDTO>(undefined);
 
   const addTasks = (task: TaskDTO) => {
     setTasks([...tasks, task]);
@@ -16,6 +19,16 @@ function App() {
 
   const deleteTask = (taskId: number) => {
     const updatedList = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedList) ;
+  }
+
+  const editTask = (task: TaskDTO) => {
+    const updatedList = tasks.map((item) => {
+      if(task.id === item.id) {
+        return task;
+      }
+      return item;
+    });
     setTasks(updatedList) ;
   }
 
@@ -31,16 +44,22 @@ function App() {
   return (
     <div className="App">
       <CreateTaskModal
-        open={modalOpen} 
-        handleClose={() => setModalOpen(false)}
+        open={createModalOpen} 
+        handleClose={() => setCreateModalOpen(false)}
         onTaskCreated={addTasks}
+      />
+      <EditTaskModal
+        open={editModalOpen} 
+        handleClose={() => setEditModalOpen(false)}
+        onTaskEdited={editTask}
+        data={taskToEdit}
       />
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" style={{ flexGrow: 1 }}>
             Task Manager
           </Typography>
-          <Button color="inherit" onClick={() => setModalOpen(true)}>Add</Button>
+          <Button color="inherit" onClick={() => setCreateModalOpen(true)}>Add</Button>
         </Toolbar>
       </AppBar>
       <Grid container spacing={ 1 } style={{ padding: 10 }}>
@@ -48,7 +67,14 @@ function App() {
           tasks.map((task) => {
             return (
               <Grid item xs={ 3 } key={ task.id }>
-                <Task data={ task } onTaskDeleted={deleteTask}/>
+                <Task 
+                  data={ task } 
+                  onTaskDelete={deleteTask} 
+                  onTaskUpdate={(item: TaskDTO) => {
+                    setTaskToEdit(item);
+                    setEditModalOpen(true);
+                  }}
+                />
               </Grid>
             );
           })

@@ -1,33 +1,62 @@
 import React from 'react';
-import { TaskDTO } from '../dto/task.dto';
+import { TaskDTO, TaskStatus } from '../dto/task.dto';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Container } from '@material-ui/core';
+import { Chip, Container } from '@material-ui/core';
 import { TaskAPI } from '../api/task.api';
 
 interface Props {
     data: TaskDTO;
-    onTaskDeleted: (taskId: number) => void;
+    onTaskDelete: (taskId: number) => void;
+    onTaskUpdate: (task: TaskDTO) => void;
 }
 
-const Task = ({ data, onTaskDeleted }: Props) => {
+const Task = ({ data, onTaskDelete, onTaskUpdate }: Props) => {
     
     const deleteTask = async () => {
         await TaskAPI.deleteOne(data.id);
-        onTaskDeleted(data.id);
-    }
+        onTaskDelete(data.id);
+    };
+
+    const getStatusText = (status: TaskStatus) => {
+        switch(status) {
+            case TaskStatus.Created:
+                return 'Created';
+            case TaskStatus.InProgress:
+                return 'In Progress';
+            case TaskStatus.Done:
+                return 'Done';
+            default:
+                return '';
+        }
+    };
+
+    const getStatusColor = (status: TaskStatus) => {
+        switch(status) {
+            case TaskStatus.InProgress:
+                return '#ff7961';
+            case TaskStatus.Done:
+                return '#76ff03';
+            default:
+                return '';
+        }
+    };
 
     return (
         <Card variant="outlined">
             <CardContent>
-                <Typography color="textSecondary" gutterBottom>
-                {data.title}
+                <Typography variant="h5" component="h2">
+                    {data.title}
                 </Typography>
+                <Chip 
+                    label={getStatusText(data.status)} 
+                    style={{ backgroundColor: getStatusColor(data.status) }} 
+                />
                 <Typography variant="body2" component="p">
-                {data.description}
+                    {data.description}
                 </Typography>
             </CardContent>
             <CardActions>
@@ -37,6 +66,7 @@ const Task = ({ data, onTaskDeleted }: Props) => {
                         variant="contained" 
                         color="primary" 
                         style={{ margin: 5 }}
+                        onClick={() => onTaskUpdate(data)}
                     >Edit
                     </Button>
                     <Button 

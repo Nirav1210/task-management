@@ -53,7 +53,7 @@ export class TaskService {
         const task: Task = await this.getOne(taskId);
         task.title = updateTaskRequest.title || task.title;
         task.description = updateTaskRequest.description || task.description;
-        task.status = updateTaskRequest.status || task.status;
+        task.status = updateTaskRequest.status === undefined ? task.status : updateTaskRequest.status;
 
         await this.taskRepository.save(task);
         const taskDTO: TaskDTO = this.entityToDTO(task);
